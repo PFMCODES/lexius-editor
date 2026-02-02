@@ -1,4 +1,4 @@
-#lexius-textarea {
+#Caret-textarea {
   position: absolute;
   border: none;
   inset: 0;
@@ -12,11 +12,11 @@
   overflow: auto; /* 👈 ONLY THIS SCROLLS */
   z-index: 1;
 }
-#lexius-textarea:focus {
+#Caret-textarea:focus {
   outline: none;
 }
 
-#lexius-highlighted {
+#Caret-highlighted {
   position: absolute;
   top: 0;
   left: 0;
@@ -28,39 +28,68 @@
   white-space: pre;
 }
 
-#lexius-caret {
+#Caret-caret {
   position: absolute;
   width: 2px !important;              /* 👈 thickness */
-  background: #0000;     /* caret color */
-  height: 14px !important;
+  opacity: 0;
   pointer-events: none;
   z-index: 3;
   top: 12px;
   animation: blink 1s step-end infinite;
 }
 
-@keyframes blink {
-  50% { opacity: 0; }
+#Caret-textarea,
+#Caret-highlighted,
+#Caret-lineCounter {
+  font: inherit;
+  line-height: inherit;
 }
 
-#lexius-textarea::selection {
+#Caret-textarea::selection {
     color: transparent;
     background-color: rgb(79, 79, 249);
 }
 
-#lexius-textarea,
-#lexius-highlighted {
+#Caret-textarea,
+#Caret-highlighted {
   font-family: monospace;
   font-size: 14px;
   line-height: 1.5;
+  padding-left: 50px; /* 👈 space for line numbers */
   tab-size: 2;
 }
 
+#Caret-lineCounter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  padding: 10px 5px;
+  font-family: monospace;
+  font: 18px;
+  line-height: 1.5;
+  color: #999;
+  text-align: right;
+  user-select: none;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  justify-content: space-around;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
 @media (prefers-color-scheme: dark) {
-  #lexius-caret {
+  #Caret-caret {
     background: #fff0; /* caret color */
   }
-  #lexius-highlighted {
+  #Caret-highlighted {
     color: #fff;
   }
 }

@@ -1,18 +1,36 @@
 {
-  "name": "editor",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
+  "name": "caret",
+  "version": "0.1.0",
+  "description": "The official code editor engine for lexius",
+  "type": "module",
+  "main": "./index.cjs",
+  "types": "./types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./esm/index.js",
+      "require": "./commonjs/index.js",
+      "types": "./types/index.d.ts"
+    }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/PFMCODES/lexius-editor.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
+  "keywords": [
+    "code-editor",
+    "monaco",
+    "editor",
+    "web-editor",
+    "syntax-highlighting",
+    "language-server",
+    "typescript",
+    "javascript",
+    "ide",
+    "browser-editor",
+    "custom-editor"
+  ],
+  "author": "PFMCODES",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/PFMCODES/lexius-editor/issues"
   },
