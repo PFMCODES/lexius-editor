@@ -1,21 +1,40 @@
+// @ts-ignore
 import javascript from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/javascript.js";
+// @ts-ignore
 import xml from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/xml.js";
+// @ts-ignore
 import css from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/css.js";
+// @ts-ignore
 import python from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/python.js";
+// @ts-ignore
 import java from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/java.js";
+// @ts-ignore
 import csharp from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/csharp.js";
+// @ts-ignore
 import cpp from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/cpp.js";
+// @ts-ignore
 import ruby from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/ruby.js";
+// @ts-ignore
 import php from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/php.js";
+// @ts-ignore
 import go from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/go.js";
+// @ts-ignore
 import c from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/c.js";
+// @ts-ignore
 import rust from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/rust.js";
+// @ts-ignore
 import kotlin from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/kotlin.js";
+// @ts-ignore
 import swift from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/swift.js";
+// @ts-ignore
 import typescript from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/typescript.js";
+// @ts-ignore
 import json from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/json.js";
+// @ts-ignore
 import bash from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/bash.js";
+// @ts-ignore
 import plaintext from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/plaintext.js";
+// @ts-ignore
 import hljs from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/core.js";
 
 let registeredLanguages: Array<T> = [];

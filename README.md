@@ -7,19 +7,19 @@
 
 A lightweight, feature-rich code editor with real-time syntax highlighting and custom caret rendering. Built with vanilla JavaScript and powered by Highlight.js, caret delivers a smooth coding experience with professional-grade features.
 
-## ✨ Features
+## Features
 
-- 🎨 **Live Syntax Highlighting** - Real-time code highlighting powered by Highlight.js
-- 🖱️ **Custom Caret** - Smooth, pixel-perfect Caret positioning and rendering
-- 🔢 **Line Numbers** - Built-in line counter with dynamic updates
-- ⌨️ **Smart Indentation** - Tab/Shift+Tab support for indenting/unindenting code blocks
-- 🎭 **Theme Support** - Multiple syntax highlighting themes (light/dark modes)
-- 📜 **Smooth Scrolling** - Synchronized scrolling for code, highlights, and line numbers
-- 📦 **ES Modules** - Modern ESM architecture for easy integration
-- 🎯 **TypeScript Ready** - Full TypeScript definitions included
-- ⚡ **Lightweight** - Pure JavaScript, no heavy frameworks required
+- **Live Syntax Highlighting** - Real-time code highlighting powered by Highlight.js
+- **Custom Caret** - Smooth, pixel-perfect Caret positioning and rendering
+- **Line Numbers** - Built-in line counter with dynamic updates
+- **Smart Indentation** - Tab/Shift+Tab support for indenting/unindenting code blocks
+- **Theme Support** - Multiple syntax highlighting themes (light/dark modes)
+- **Smooth Scrolling** - Synchronized scrolling for code, highlights, and line numbers
+- **ES Modules** - Modern ESM architecture for easy integration
+- **TypeScript Ready** - Full TypeScript definitions included
+- **Lightweight** - Pure JavaScript, no heavy frameworks required
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [What's new](#What's-New?)
 - [Installation](#installation)
@@ -29,12 +29,14 @@ A lightweight, feature-rich code editor with real-time syntax highlighting and c
 - [Customization](#customization)
 - [Contributing](#contributing)
 - [License](#license)
+- [Perfomance Notes](#performance-notes)
 
 ## What's-New?
 
-### New fresh package directory, now the heavy work is done in the cloud while minimizing package size to just a few Kilo Bytes(~60.8 kb).
+### The editor has been optimized like crazy, the editor used to lag at 500 lines not it does not lag until 10k+ lines(x20 perfomance increase)
+### for more info about the perfomace check out [this.](#performance-notes)
 
-## 🚀 Installation
+##  Installation
 
 ### NPM
 
@@ -54,7 +56,7 @@ yarn add @pfmcodes/caret
 pnpm add @pfmcodes/caret
 ```
 
-## 🏁 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -102,7 +104,7 @@ const editorInstance = await editor.editor.createEditor(
 );
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 caret/
@@ -116,7 +118,7 @@ caret/
 └── LICENSE             # MIT License
 ```
 
-## 💡 Usage
+## Usage
 
 ### JavaScript Editor
 
@@ -168,7 +170,7 @@ const emptyEditor = await editor.createEditor(
 );
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Custom Styling
 
@@ -205,7 +207,7 @@ The editor comes with default styles that you can override:
 }
 ```
 
-## 🎯 Advanced Features
+## Advanced Features
 
 ### Multi-Language Support
 
@@ -290,7 +292,7 @@ Caret supports all Highlight.js themes. Popular options include:
 - `stackoverflow-light`
 - `xcode`
 
-## 🛠️ API Reference
+## API Reference
 
 ### createEditor(container, options)
 
@@ -339,7 +341,7 @@ The editor features a custom-rendered Caret that adapts to your theme (light/dar
 #### Synchronized Scrolling
 All editor components (code, highlights, line numbers) scroll together smoothly.
 
-## 📖 Complete Example
+## Complete Example
 
 Here's a complete working example:
 
@@ -457,7 +459,7 @@ for (let i = 0; i < 10; i++) {
 </html>
 ```
 
-## ⚙️ Technical Details
+## Technical Details
 
 ### How It Works
 
@@ -478,6 +480,7 @@ The editor synchronizes all layers during:
 - **Real-time Highlighting**: Uses Highlight.js for fast, accurate syntax highlighting
 - **Canvas Measurement**: Employs HTML5 Canvas API for precise text width calculations
 - **Event Optimization**: Efficiently updates only what's necessary on each interaction
+- **Heavy Optimization**: previous version(0.1.6) used to handle 500 lines before lagging, with new caret@0.2.0, there's almost 20 times perfomace increase now it can handle 10K+ lines smoothly before lagging(better results in optimized browsers like firfox)
 
 ### Browser Support
 
@@ -485,7 +488,7 @@ The editor synchronizes all layers during:
 - Chrome, Firefox, Safari, Edge (latest versions)
 - Requires JavaScript modules support
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please follow these steps:
 
@@ -514,22 +517,27 @@ npm run dev
 npm run build
 ```
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Performance Notes
+- Handles 10k+ lines smoothly in all browsers
+- Firefox DevTools can inspect up to 3M lines without breaking a sweat
+- Chrome DevTools politely requests you don't inspect past 300k lines
+
+## Acknowledgments
 
 - Built with modern JavaScript/TypeScript
 - Syntax highlighting powered by Highlight.js
 - Inspired by various text editor projects in the JavaScript ecosystem
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/pfmcodes/lexius-editor/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/pfmcodes/lexius-editor/discussions)
 
-## 🔗 Links
+## Links
 
 - [GitHub Repository](https://github.com/pfmcodes/lexius-editor)
 - [NPM Package](https://www.npmjs.com/package/@pfmcodes/caret) *(if published)*

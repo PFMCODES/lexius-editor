@@ -3,15 +3,18 @@ import languages from "./languages.ts";
 
 languages.init();
 
-async function createEditor(editor: HTMLElement, data: any) {
+async function createEditor(editor: HTMLElement, data: { value?: string, language: string, theme?: string }) {
     const editor1: HTMLTextAreaElement = document.createElement("textarea");
     const highlighted: HTMLPreElement = document.createElement("pre");
     const caret: HTMLDivElement = document.createElement("div");
     const measureCanvas: HTMLCanvasElement = document.createElement("canvas");
-    const measureCtx: CanvasRenderingContext2D  = measureCanvas.getContext("2d")!;
-    const isDark: boolean = data.theme && (data.theme.includes("dark") || data.theme.includes("night"));
-    const caretColor: string = isDark ? "#fff" : "#7116d8";
-    const lineColor: string = isDark ? "#fff" : "#000";
+    const measureCtx: CanvasRenderingContext2D = measureCanvas.getContext("2d") as CanvasRenderingContext2D;
+    if (!measureCtx) {
+        throw new Error("Failed to get 2D context from canvas");
+    }
+    const isDark = data.theme && (data.theme.includes("dark") || data.theme.includes("night"));
+    const caretColor = isDark ? "#fff" : "#7116d8";
+    const lineColor = isDark ? "#fff" : "#000";
     const lineCounter: HTMLDivElement = document.createElement("div");
 
     editor1.id = "Caret-textarea";
@@ -23,32 +26,32 @@ async function createEditor(editor: HTMLElement, data: any) {
     caret.className = 'dark';
     lineCounter.className = 'dark';
     editor1.style.backgroundColor = isDark ? "#222" : "#fff";
-    let code: string = data.value || "";
-    let language: string = data.language;
-    let theme: string = data.theme;
+    let code = data.value || "";
+    let language = data.language;
+    let theme = data.theme;
     if (!languages.registeredLanguages.includes(language)) {
         const mod = await import(`https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/${language}.js`);
         languages.registerLanguage(language, mod.default);
         languages.registeredLanguages.push(language);
     }
     if (theme) {
-        let themeLink = document.getElementById("Caret-theme")
+        let themeLink: HTMLLinkElement | null = document.getElementById("Caret-theme") as HTMLLinkElement;
         if (!themeLink) {
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.id = "Caret-theme";
-            link.href = `./highlight.js/styles/${theme}.css`;
+            link.href = `https://esm.sh/@pfmcodes/highlight.js@1.0.0/styles/${theme}.css`;
             document.head.appendChild(link);
         } else {
-            themeLink.href = `./highlight.js/styles/${theme}.css`;
+            themeLink.href = `https://esm.sh/@pfmcodes/highlight.js@1.0.0/styles/${theme}.css`;
         }
     } else {
-        let themeLink  = document.getElementById("Caret-theme");
+        let themeLink: HTMLLinkElement | null = document.getElementById("Caret-theme") as HTMLLinkElement;
         if (!themeLink) {
             const link = document.createElement("link");
             link.rel = "stylesheet";
             link.id = "Caret-theme";
-            link.href = `./highlight.js/styles/hybrid.css`;
+            link.href = `https://esm.sh/@pfmcodes/highlight.js@1.0.0/styles/hybrid.css`;
             document.head.appendChild(link);
         } else {
             themeLink.href = `./highlight.js/styles/hybrid.css`;
@@ -57,14 +60,15 @@ async function createEditor(editor: HTMLElement, data: any) {
     editor1.spellcheck = false;
     editor1.autocapitalize = "off";
     editor1.autocomplete = "off";
-    (editor1 as any).autocorrect = false;
+    editor1.autocorrect = "off" as any;
     editor.style = "position: relative; width: 600px; height: 300px; overflow: hidden; /* 👈 CRITICAL */ font-size: 14px;"   
-    if (code) {
-        editor1.value = code;
+    if (code && editor && editor1 && language && highlighted) {
         editor1.style.paddingTop = "-9px";
-        highlighted.innerHTML = hljs.highlight(code, { language: language }).value;
+        console.log(data.value + " data.value");
+        editor1.value = data.value as string;
+        highlighted.innerHTML = await _render(code, language, editor1);
     }
-    const keyDown = (e: any) => {
+    const keyDown = async (e: KeyboardEvent) => {
         if (e.key !== "Tab") return;
 
         e.preventDefault();
@@ -83,8 +87,8 @@ async function createEditor(editor: HTMLElement, data: any) {
         const block = value.slice(lineStart, finalLineEnd);
         const lines = block.split("\n");
 
-        let newLines: any;
-        let delta: number = 0;
+        let newLines;
+        let delta = 0;
 
         if (e.shiftKey) {
             // UNINDENT
@@ -117,7 +121,7 @@ async function createEditor(editor: HTMLElement, data: any) {
         editor1.selectionEnd =
             end + delta * newLines.length;
 
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language }).value;
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     }
@@ -128,15 +132,15 @@ async function createEditor(editor: HTMLElement, data: any) {
     editor.appendChild(caret);
 
     function updateFontMetrics() {
-        const style: any = getComputedStyle(editor1);
+        const style = getComputedStyle(editor1);
         measureCtx.font = `${style.fontSize} ${style.fontFamily}`;
     }
 
     function updateLineNumbers() {
-        const lineCount: number = editor1.value.split("\n").length;
+        const lineCount = editor1.value.split("\n").length;
 
-        let html: string = "";
-        for (let i: number = 1; i <= lineCount; i++) {
+        let html = "";
+        for (let i = 1; i <= lineCount; i++) {
             html += `<div class="Caret-lineCounter-number" style="color: ${lineColor}">${i}</div>`;
         }
 
@@ -194,17 +198,17 @@ async function createEditor(editor: HTMLElement, data: any) {
 
         caret.style.height = `${lineHeight - 5}px`;
     }
-    const input = () => {
+    const input = async () => {
         caret.style.opacity = "1";
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language: language }).value;
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     };
     editor1.addEventListener("input", input);
-    const scroll = () => {
+    const scroll = async () => {
         const x = -editor1.scrollLeft;
         const y = -editor1.scrollTop;
-
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         highlighted.style.transform = `translate(${x}px, ${y}px)`;
         caret.style.transform = `translate(${x}px, ${y}px)`;
         lineCounter.style.transform = `translateY(${y}px)`;
@@ -230,8 +234,8 @@ async function createEditor(editor: HTMLElement, data: any) {
         editor1.removeEventListener('keydown', keyDown);
         editor.innerHTML = "";
     }
-    function refresh() {
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language }).value;
+    async function refresh() {
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     }
@@ -261,6 +265,52 @@ async function createEditor(editor: HTMLElement, data: any) {
         setLanguage,
         destroy
     };
+}
+
+function escapeHtml(str: string) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+async function _render(code: string, language: string, editor: HTMLElement) {
+    // If no editor context provided, just highlight everything (initial load)
+    if (!editor) {
+        return hljs.highlight(code, { language }).value;
+    }
+    
+    const scrollTop = editor.scrollTop;
+    const scrollBottom = scrollTop + editor.clientHeight;
+    const style = getComputedStyle(editor);
+    const lineHeight = parseFloat(style.lineHeight);
+    
+    // Calculate visible line range
+    const startLine = Math.floor(scrollTop / lineHeight);
+    const endLine = Math.ceil(scrollBottom / lineHeight);
+    
+    const lines = code.split("\n");
+    
+    // Add buffer (render extra lines above/below for smooth scrolling)
+    const bufferLines = 10;
+    const visibleStart = Math.max(0, startLine - bufferLines) || 0;
+    const visibleEnd = Math.min(lines.length, endLine + bufferLines) || 0;
+    
+    // Split into three sections
+    const beforeLines = lines.slice(0, visibleStart);
+    const visibleLines = lines.slice(visibleStart, visibleEnd);
+    const afterLines = lines.slice(visibleEnd);
+    
+    // Only highlight visible portion
+    
+    const highlightedVisible = hljs.highlight(visibleLines.join("\n"), { language }).value;
+    // Plain text for non-visible areas (no highlighting = faster)
+    if (highlightedVisible.trim() === "") {
+        return hljs.highlight(escapeHtml(code), { language }).value;
+    }
+    const beforeHTML = "\n".repeat(beforeLines.length);
+    const afterHTML = "\n".repeat(afterLines.length);
+    return beforeHTML + highlightedVisible + afterHTML;
 }
 
 const editor = {

@@ -59,12 +59,13 @@ async function createEditor(editor, data) {
     editor1.autocomplete = "off";
     editor1.autocorrect = "off";
     editor.style = "position: relative; width: 600px; height: 300px; overflow: hidden; /* 👈 CRITICAL */ font-size: 14px;"   
-    if (code) {
-        editor1.value = code;
+    if (code && editor && editor1 && language && highlighted) {
         editor1.style.paddingTop = "-9px";
-        highlighted.innerHTML = hljs.highlight(code, { language: language }).value;
+        console.log(data.value + " data.value");
+        editor1.value = data.value;
+        highlighted.innerHTML = await _render(data.value, language, editor1);
     }
-    const keyDown = (e) => {
+    const keyDown = async (e) => {
         if (e.key !== "Tab") return;
 
         e.preventDefault();
@@ -117,7 +118,7 @@ async function createEditor(editor, data) {
         editor1.selectionEnd =
             end + delta * newLines.length;
 
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language }).value;
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     }
@@ -194,17 +195,17 @@ async function createEditor(editor, data) {
 
         caret.style.height = `${lineHeight - 5}px`;
     }
-    const input = () => {
+    const input = async () => {
         caret.style.opacity = "1";
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language: language }).value;
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     };
     editor1.addEventListener("input", input);
-    const scroll = () => {
+    const scroll = async () => {
         const x = -editor1.scrollLeft;
         const y = -editor1.scrollTop;
-
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         highlighted.style.transform = `translate(${x}px, ${y}px)`;
         caret.style.transform = `translate(${x}px, ${y}px)`;
         lineCounter.style.transform = `translateY(${y}px)`;
@@ -230,8 +231,8 @@ async function createEditor(editor, data) {
         editor1.removeEventListener('keydown', keyDown);
         editor.innerHTML = "";
     }
-    function refresh() {
-        highlighted.innerHTML = hljs.highlight(editor1.value, { language }).value;
+    async function refresh() {
+        highlighted.innerHTML = await _render(editor1.value, language, editor1);
         updateLineNumbers();
         updateCaret();
     }
@@ -261,6 +262,52 @@ async function createEditor(editor, data) {
         setLanguage,
         destroy
     };
+}
+
+function escapeHtml(str) {
+    return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+async function _render(code, language, editor) {
+    // If no editor context provided, just highlight everything (initial load)
+    if (!editor) {
+        return hljs.highlight(code, { language }).value;
+    }
+    
+    const scrollTop = editor.scrollTop;
+    const scrollBottom = scrollTop + editor.clientHeight;
+    const style = getComputedStyle(editor);
+    const lineHeight = parseFloat(style.lineHeight);
+    
+    // Calculate visible line range
+    const startLine = Math.floor(scrollTop / lineHeight);
+    const endLine = Math.ceil(scrollBottom / lineHeight);
+    
+    const lines = code.split("\n");
+    
+    // Add buffer (render extra lines above/below for smooth scrolling)
+    const bufferLines = 10;
+    const visibleStart = Math.max(0, startLine - bufferLines) || 0;
+    const visibleEnd = Math.min(lines.length, endLine + bufferLines) || 0;
+    
+    // Split into three sections
+    const beforeLines = lines.slice(0, visibleStart);
+    const visibleLines = lines.slice(visibleStart, visibleEnd);
+    const afterLines = lines.slice(visibleEnd);
+    
+    // Only highlight visible portion
+    
+    const highlightedVisible = hljs.highlight(visibleLines.join("\n"), { language }).value;
+    // Plain text for non-visible areas (no highlighting = faster)
+    if (highlightedVisible.trim() === "") {
+        return hljs.highlight(escapeHtml(code), { language }).value;
+    }
+    const beforeHTML = "\n".repeat(beforeLines.length);
+    const afterHTML = "\n".repeat(afterLines.length);
+    return beforeHTML + highlightedVisible + afterHTML;
 }
 
 const editor = {

@@ -2,16 +2,21 @@
   position: absolute;
   border: none;
   inset: 0;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
   font-family: monospace;
   background: transparent;
   color: transparent;
   caret-color: #fff;
   border: 1px solid #ccc;
-  overflow: scroll; /* 👈 ONLY THIS SCROLLS */
+  overflow-x: scroll; /* 👈 ONLY THIS SCROLLS */
   z-index: 1;
   width: 100%;
 }
+
+#Caret-texarea::-webkit-scrollbar {
+  z-index: 3;
+}
+
 #Caret-textarea:focus {
   outline: none;
 }
