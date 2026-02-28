@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-#Caret-texarea::-webkit-scrollbar {
+::-webkit-scrollbar {
   z-index: 3;
 }
 

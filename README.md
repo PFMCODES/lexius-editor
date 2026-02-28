@@ -142,7 +142,7 @@ console.log(greet('World'));`,
 ### Python Editor
 
 ```javascript
-const pyEditor = await editor.createEditor(
+const pyEditor = await editor.editor.createEditor(
   document.getElementById('py-editor'),
   {
     value: `def fibonacci(n):
@@ -160,7 +160,7 @@ print([fibonacci(i) for i in range(10)])`,
 ### Empty Editor (Start from Scratch)
 
 ```javascript
-const emptyEditor = await editor.createEditor(
+const emptyEditor = await editor.editor.createEditor(
   document.getElementById('empty-editor'),
   {
     value: '',
@@ -215,19 +215,19 @@ Caret supports all languages available in Highlight.js:
 
 ```javascript
 // JavaScript
-await editor.createEditor(el, { language: 'javascript', ... });
+await editor.editor.createEditor(el, { language: 'javascript', ... });
 
 // Python
-await editor.createEditor(el, { language: 'python', ... });
+await editor.editor.createEditor(el, { language: 'python', ... });
 
 // TypeScript
-await editor.createEditor(el, { language: 'typescript', ... });
+await editor.editor.createEditor(el, { language: 'typescript', ... });
 
 // HTML
-await editor.createEditor(el, { language: 'html', ... });
+await editor.editor.createEditor(el, { language: 'html', ... });
 
 // CSS
-await editor.createEditor(el, { language: 'css', ... });
+await editor.editor.createEditor(el, { language: 'css', ... });
 
 // And many more...
 ```
@@ -235,7 +235,7 @@ await editor.createEditor(el, { language: 'css', ... });
 ### Dynamic Language Switching
 
 ```javascript
-const editorInstance = await editor.createEditor(el, {
+const editorInstance = await editor.editor.createEditor(el, {
   value: 'console.log("Hello");',
   language: 'javascript',
   theme: 'hybrid'
@@ -257,7 +257,7 @@ The editor automatically:
 ### Configuration Options
 
 ```javascript
-const editorInstance = await editor.createEditor(
+const editorInstance = await editor.editor.createEditor(
   containerElement,
   {
     // Initial code content
@@ -352,7 +352,7 @@ Here's a complete working example:
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caret Demo</title>
-  <link rel="stylesheet" href="./node_modules/caret/index.css">
+  <link rel="stylesheet" href="./index.css">
   <style>
     body {
       font-family: system-ui, -apple-system, sans-serif;
@@ -393,21 +393,22 @@ Here's a complete working example:
   <h1 style="text-align: center;">Caret Demo</h1>
   
   <div class="controls">
-    <button onclick="changeLanguage('javascript')">JavaScript</button>
-    <button onclick="changeLanguage('python')">Python</button>
-    <button onclick="changeLanguage('html')">HTML</button>
-    <button onclick="changeTheme('monokai')">Monokai</button>
-    <button onclick="changeTheme('github')">GitHub</button>
-    <button onclick="getCode()">Get Code</button>
+    <button onclick="window.changeLanguage('javascript')">JavaScript</button>
+    <button onclick="window.changeLanguage('python')">Python</button>
+    <button onclick="window.changeLanguage('html')">HTML</button>
+    <button onclick="window.changeTheme('monokai')">Monokai</button>
+    <button onclick="window.changeTheme('github-dark')">GitHub</button>
+    <button onclick="window.changeTheme('atom-one-dark')">Atom One Dark</button>
+    <button onclick="window.getCode()">Get Code</button>
   </div>
   
   <div id="editor"></div>
   
   <script type="module">
-    import editor from './node_modules/caret/esm/index.js';
+    import editor from './node_modules/@pfmcodes/caret/esm/index.js';
     
     // Initialize editor
-    const editorInstance = await editor.createEditor(
+    const editorInstance = await editor.editor.createEditor(
       document.getElementById('editor'),
       {
         value: `// Welcome to Caret!
@@ -421,7 +422,7 @@ for (let i = 0; i < 10; i++) {
   console.log(\`F(\${i}) = \${fibonacci(i)}\`);
 }`,
         language: 'javascript',
-        theme: 'atom-one-dark'
+        theme: 'tokyo-night-dark'
       }
     );
     
@@ -433,20 +434,7 @@ for (let i = 0; i < 10; i++) {
     };
     
     window.changeTheme = (theme) => {
-      // Recreate editor with new theme
-      const currentCode = editorInstance.getValue();
-      editorInstance.destroy();
-      
-      editor.createEditor(
-        document.getElementById('editor'),
-        {
-          value: currentCode,
-          language: 'javascript',
-          theme: theme
-        }
-      ).then(instance => {
-        window.editorInstance = instance;
-      });
+      editor.theme.setTheme(theme);
     };
     
     window.getCode = () => {
