@@ -24,8 +24,13 @@ function init() {
     // Register all languages
     hljs.registerLanguage("javascript", javascript);
     hljs.registerLanguage("xml", xml);
+    hljs.registerLanguage("typescript", typescript);
+    hljs.registerAliases(["jsx"], { languageName: "javascript" });
+    hljs.registerAliases(["js"], { languageName: "javascript" });
+    hljs.registerAliases(["ts"], { languageName: "typescript" });
+    hljs.registerAliases(["html"], { languageName: "xml" });
+    hljs.registerAliases(["svg"], { languageName: "xml" });
     hljs.registerLanguage("css", css);
-    hljs.registerLanguage("html", xml);
     hljs.registerLanguage("python", python);
     hljs.registerLanguage("java", java);
     hljs.registerLanguage("csharp", csharp);
@@ -37,18 +42,15 @@ function init() {
     hljs.registerLanguage("rust", rust);
     hljs.registerLanguage("kotlin", kotlin);
     hljs.registerLanguage("swift", swift);
-    hljs.registerLanguage("typescript", typescript);
     hljs.registerLanguage("json", json);
     hljs.registerLanguage("bash", bash);
     hljs.registerLanguage("shell", bash);
     hljs.registerLanguage("sh", bash);
     hljs.registerLanguage("plaintext", plaintext);
-    registeredLanguages = [
-        "javascript",
-        "js",
-        "xml",
-        "html",
-        "svg",
+    registeredLanguages.push(
+        "javascript", "js",
+        "xml", "html", "svg",
+        "css",
         "python",
         "java",
         "csharp",
@@ -62,11 +64,9 @@ function init() {
         "swift",
         "typescript",
         "json",
-        "bash",
-        "shell",
-        "sh",
+        "bash", "shell", "sh",
         "plaintext"
-    ]
+    );
 }
 
 function registerLanguage(name, definition) {

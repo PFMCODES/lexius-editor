@@ -1,4 +1,4 @@
-#Caret-textarea {
+.Caret-textarea {
   position: absolute;
   border: none;
   inset: 0;
@@ -7,33 +7,40 @@
   background: transparent;
   color: transparent;
   caret-color: #fff;
-  border: 1px solid #ccc;
   overflow-x: scroll; /* 👈 ONLY THIS SCROLLS */
   z-index: 1;
-  width: 100%;
+  width: auto;
+  min-width: max-content;
 }
 
 ::-webkit-scrollbar {
-  z-index: 3;
+  display: none;
 }
 
-#Caret-textarea:focus {
+.Caret-caret, .Caret-lineCounter, .Caret-textarea {
+  overflow: auto;
+  overflow-x: auto;
+}
+
+.Caret-textarea:focus {
   outline: none;
 }
 
-#Caret-highlighted {
+.Caret-highlighted {
   position: absolute;
   top: 0;
   left: 0;
   margin: 0;
   padding: 10px;
   pointer-events: none;
-  overflow: hidden; /* 👈 IMPORTANT */
+  overflow: visible; /* 👈 IMPORTANT */
   z-index: 2;
   white-space: pre;
+  min-width: max-content;
+  width: auto;
 }
 
-#Caret-caret {
+.Caret-caret {
   position: absolute;
   width: 2px !important;              /* 👈 thickness */
   opacity: 0;
@@ -44,20 +51,20 @@
   animation: blink 1s step-end infinite;
 }
 
-#Caret-textarea,
-#Caret-highlighted,
-#Caret-lineCounter {
+.Caret-textarea,
+.Caret-highlighted,
+.Caret-lineCounter {
   font: inherit;
   line-height: inherit;
 }
 
-#Caret-textarea::selection {
+.Caret-textarea::selection {
     color: transparent;
     background-color: rgb(79, 79, 249);
 }
 
-#Caret-textarea,
-#Caret-highlighted {
+.Caret-textarea,
+.Caret-highlighted {
   font-family: monospace;
   font-size: 14px;
   line-height: 1.5;
@@ -65,7 +72,7 @@
   tab-size: 2;
 }
 
-#Caret-lineCounter {
+.Caret-lineCounter {
   position: absolute;
   top: 0;
   left: 0;
@@ -74,7 +81,7 @@
   font-family: monospace;
   font: 18px;
   line-height: 1.5;
-  color: #999;
+  color: .999;
   text-align: right;
   user-select: none;
   opacity: 0.7;
@@ -92,12 +99,12 @@
   50% { opacity: 0; }
 }
 
-#Caret-caret.dark {
+.Caret-caret.dark {
   background: #fff0; /* caret color */
 }
-#Caret-highlighted.dark {
+.Caret-highlighted.dark {
   color: #fff;
 }
-#Caret-lineCounter.dark {
+.Caret-lineCounter.dark {
   color: #fff;
 }

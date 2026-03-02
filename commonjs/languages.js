@@ -1,22 +1,22 @@
-const javascript = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/javascript.js");
-const xml = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/xml.js");
-const css = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/css.js");
-const python = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/python.js");
-const java = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/java.js");
-const csharp = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/csharp.js");
-const cpp = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/cpp.js");
-const ruby = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/ruby.js");
-const php = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/php.js");
-const go = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/go.js");
-const c = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/c.js");
-const rust = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/rust.js");
-const kotlin = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/kotlin.js");
-const swift = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/swift.js");
-const typescript = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/typescript.js");
-const json = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/json.js");
-const bash = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/bash.js");
-const plaintext = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/plaintext.js");
-const hljs = require("https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/core.js");
+import javascript from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/javascript.js";
+import xml from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/xml.js";
+import css from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/css.js";
+import python from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/python.js";
+import java from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/java.js";
+import csharp from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/csharp.js";
+import cpp from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/cpp.js";
+import ruby from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/ruby.js";
+import php from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/php.js";
+import go from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/go.js";
+import c from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/c.js";
+import rust from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/rust.js";
+import kotlin from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/kotlin.js";
+import swift from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/swift.js";
+import typescript from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/typescript.js";
+import json from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/json.js";
+import bash from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/bash.js";
+import plaintext from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/languages/plaintext.js";
+import hljs from "https://esm.sh/@pfmcodes/highlight.js@1.0.0/es/core.js";
 
 let registeredLanguages = [];
 
@@ -24,8 +24,13 @@ function init() {
     // Register all languages
     hljs.registerLanguage("javascript", javascript);
     hljs.registerLanguage("xml", xml);
+    hljs.registerLanguage("typescript", typescript);
+    hljs.registerAliases(["jsx"], { languageName: "javascript" });
+    hljs.registerAliases(["js"], { languageName: "javascript" });
+    hljs.registerAliases(["ts"], { languageName: "typescript" });
+    hljs.registerAliases(["html"], { languageName: "xml" });
+    hljs.registerAliases(["svg"], { languageName: "xml" });
     hljs.registerLanguage("css", css);
-    hljs.registerLanguage("html", xml);
     hljs.registerLanguage("python", python);
     hljs.registerLanguage("java", java);
     hljs.registerLanguage("csharp", csharp);
@@ -37,7 +42,6 @@ function init() {
     hljs.registerLanguage("rust", rust);
     hljs.registerLanguage("kotlin", kotlin);
     hljs.registerLanguage("swift", swift);
-    hljs.registerLanguage("typescript", typescript);
     hljs.registerLanguage("json", json);
     hljs.registerLanguage("bash", bash);
     hljs.registerLanguage("shell", bash);
@@ -46,6 +50,7 @@ function init() {
     registeredLanguages = [
         "javascript",
         "js",
+        'jsx',
         "xml",
         "html",
         "svg",

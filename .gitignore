@@ -4,3 +4,5 @@ dist
 .env
 index.html
 test
+.npmignore
+package-lock.json

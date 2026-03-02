@@ -33,8 +33,10 @@ A lightweight, feature-rich code editor with real-time syntax highlighting and c
 
 ## What's-New?
 
-### The editor has been optimized like crazy, the editor used to lag at 500 lines not it does not lag until 10k+ lines(x20 performance increase)
-### for more info about the perfomace check out [this](#performance-notes) and [this](#performance).
+- Multiple editor instances support
+- Word-aware line wrapping
+- Fixed language re-registration bug
+- Known issue: custom caret may be 1 character off on original lines of a wrapped line
 
 ##  Installation
 
