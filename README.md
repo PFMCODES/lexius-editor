@@ -33,6 +33,11 @@ A lightweight, feature-rich code editor with real-time syntax highlighting and c
 
 ## What's-New?
 
+### v0.2.6
+
+- CommonJs support has been removed to reduce package size
+
+### v0.2.5
 - Multiple editor instances support
 - Word-aware line wrapping
 - Fixed language re-registration bug
@@ -75,7 +80,7 @@ pnpm add @pfmcodes/caret
   <div id="editor"></div>
   
   <script type="module">
-    import editor from './node_modules/@pfmcodes/caret/esm/index.js';
+    import editor from './node_modules/@pfmcodes/caret/index.js';
     
     const instance = await editor.editor.createEditor(
       document.getElementById('editor'),
@@ -93,7 +98,7 @@ pnpm add @pfmcodes/caret
 ### ES Module Import
 
 ```javascript
-import editor from './node_modules/@pfmcodes/caret/esm/index.js';
+import editor from './node_modules/@pfmcodes/caret/index.js';
 
 // Create editor instance
 const editorInstance = await editor.editor.createEditor(
@@ -110,14 +115,17 @@ const editorInstance = await editor.editor.createEditor(
 
 ```
 caret/
-├── esm/                  # ES Module builds
-├── highlight.js/         # Syntax highlighting support
-├── types/               # TypeScript type definitions
-├── index.css            # Core styles
-├── package.json         # Package configuration
+├── types/              # TypeScript type definitions
 ├── .gitignore          # Git ignore rules
 ├── .npmignore          # NPM ignore rules
-└── LICENSE             # MIT License
+├── editor.js           # main editor file essential for ui
+├── index.css           # Core styles
+├── index.js            # Main file
+├── langauges.js        # handles langauge related tasks
+├── LICENSE             # MIT License
+├── package.json        # Package configuration
+├── README.md           # The file containing instructions and help
+└── theme.js            # handles theme related tasks
 ```
 
 ## Usage
@@ -125,8 +133,7 @@ caret/
 ### JavaScript Editor
 
 ```javascript
-import editor from './node_modules/@pfmcodes/caret/esm/index.js'; // auto link to commonjs version
-
+import editor from './node_modules/@pfmcodes/caret/index.js';
 const jsEditor = await editor.editor.createEditor(
   document.getElementById('js-editor'),
   {
@@ -407,7 +414,7 @@ Here's a complete working example:
   <div id="editor"></div>
   
   <script type="module">
-    import editor from './node_modules/@pfmcodes/caret/esm/index.js';
+    import editor from './node_modules/@pfmcodes/caret/index.js';
     
     // Initialize editor
     const editorInstance = await editor.editor.createEditor(

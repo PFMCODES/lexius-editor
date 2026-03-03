@@ -1,5 +1,8 @@
 .git
-index.html
-test
 .gitignore
+.vscode
 test
+index.html
+.env
+package-lock.json
+.npmignore
