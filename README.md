@@ -1,5 +1,5 @@
-# Caret
 ![LOGO](https://github.com/PFMCODES/Caret/raw/main/logo.svg)
+# Caret
 [![License: MIT](https://img.shields.io/badge/License-MIT-4000ff.svg)](https://opensource.org/licenses/MIT)
 [![JavaScript](https://img.shields.io/badge/JavaScript-63.7%25-f6fa03)](https://github.com/PFMCODES/lexius-edior)
 [![JavaScript](https://img.shields.io/badge/TypeScript-32.3%25-0244f7)](https://github.com/PFMCODES/lexius-edior)
